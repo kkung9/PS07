@@ -1,0 +1,49 @@
+---
+title: "National Women's Soccer League Goal Scorers"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include = FALSE}
+library(tidyverse)
+```
+
+## About the Data
+
+This data includes players who scored 5 or more goals during the 2021 season, which runs from May to November. There are 21 players who scored 5 or more goals. ^[https://www.nwslsoccer.com/stats/players]
+
+```{r, include = FALSE}
+stats <- tibble(
+  player = c("Ashley Hatch", "Bethany Balcer", "Rachel Daly", "Margaret Purce", "Eugenie Le Sommer", "Sydney Leroux", "Ifeoma Onumonu", "Trinity Rodman", "Sophia Smith", "Lynn Williams", "Megan Rapinoe", "Ebony Salmon", "Simone Charley", "Jessica Fishlock", "CeCe Kizer", "Alex Morgan", "Mallory Pugh", "Amy Rodriguez", "Ashley Sanchez", "Christine Sinclair", "Kealia Watt"), 
+  team = c("Washington Spirit", "OL Reign", "Houston Dash", "NY/NJ Gotham", "OL Reign", "Orlando Pride", "NY/NJ Gotham", "Washington Spirit", "Portland Thorns", "North Carolina Courage", "OL Reign", "Racing Louisville", "Portland Thorns", "OL Reign", "Racing Louisville", "Orlando Pride", "Chicago Red Stars", "North Carolina Courage", "Washington Spirit", "Portland Thorns", "Chicago Red Stars"),
+  shots = c(46, 40, 42, 31, 54, 47, 47, 68, 78, 59, 34, 27, 35, 44, 21, 32, 56, 44, 46, 39, 55), 
+  goals_scored = c(11, 9, 9, 9, 8, 8, 8, 7, 7, 7, 6, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5)
+)
+```
+
+## Shots vs Goals by Player
+
+This plot shows the number of shots taken by each of the NWSL players who scored 5 or more goals during the 2021 season. Players who scored more goals while taking less shots were more effective at converting their opportunities.
+
+```{r}
+ggplot(data = stats, mapping = aes(x = shots, y = goals_scored, color = team)) + 
+  geom_point() + 
+  scale_color_manual(values = c("#6CC5F5", "#FF842A", "#DDC27B", "black", "#9E9B9B", "#A54BF1", "#E51A1A", "#D7A8E7", "#3324CA")) +
+  labs(title = "Number of Shots vs Number of Goals", subtitle = 
+         "During the 2021 season", x = "Shots", y = "Goals", color = "Team")
+```
+
+## Teams with Most Top Scorers
+
+This plot shows the distribution across teams of the players who scored 5 or more goals in the 2021 season
+
+```{r}
+ggplot(data = stats, mapping = aes(x = team)) + 
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(title = "Players Who Scored 5 or More Goals by Team", subtitle = 
+         "During the 2021 season", x = "Team", y = "Number of Players")
+```
